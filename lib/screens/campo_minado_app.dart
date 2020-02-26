@@ -9,11 +9,11 @@ class CampoMinadoApp extends StatelessWidget {
     print('reiniciar...');
   }
   
-  _abrir(Campo campo) {
+  void _abrir(Campo campo) {
     print('abrir...');
   }
   
-  _alternarMarcacao(Campo campo) {
+  void _alternarMarcacao(Campo campo) {
     print('Alternar Marcação...');
   }
 
@@ -48,8 +48,8 @@ class CampoMinadoApp extends StatelessWidget {
         body: Container(
           child: CampoWidget(
             campo: campo,
-            onAbrir: _abrir(campo),
-            onAlternarMarcacao: _alternarMarcacao(campo),
+            onAbrir: _abrir,
+            onAlternarMarcacao: _alternarMarcacao,
           ),
         ),
       ),
