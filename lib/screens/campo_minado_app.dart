@@ -15,7 +15,7 @@ class _CampoMinadoAppState extends State<CampoMinadoApp> {
   Tabuleiro _tabuleiro = Tabuleiro(
     linhas: 10,
     colunas: 10,
-    qtdeBombas: 3,
+    qtdeBombas: 10,
   );
 
   void _reiniciar() {
@@ -27,6 +27,8 @@ class _CampoMinadoAppState extends State<CampoMinadoApp> {
 
   void _abrir(Campo campo) {
     setState(() {
+      if(_venceu != null) return;
+
       try {
         campo.abrir();
 
