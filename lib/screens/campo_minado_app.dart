@@ -12,11 +12,7 @@ class CampoMinadoApp extends StatefulWidget {
 
 class _CampoMinadoAppState extends State<CampoMinadoApp> {
   bool _venceu;
-  Tabuleiro _tabuleiro = Tabuleiro(
-    linhas: 10,
-    colunas: 10,
-    qtdeBombas: 10,
-  );
+  Tabuleiro _tabuleiro;
 
   void _reiniciar() {
     setState(() {
@@ -27,13 +23,12 @@ class _CampoMinadoAppState extends State<CampoMinadoApp> {
 
   void _abrir(Campo campo) {
     setState(() {
-      if(_venceu != null) return;
+      if (_venceu != null || campo.marcado) return;
 
       try {
         campo.abrir();
 
-        if(_tabuleiro.resolvido) _venceu = true;
-
+        if (_tabuleiro.resolvido) _venceu = true;
       } on ExplosaoException {
         _tabuleiro.revelarBombas();
         _venceu = false;
@@ -44,8 +39,24 @@ class _CampoMinadoAppState extends State<CampoMinadoApp> {
   void _alternarMarcacao(Campo campo) {
     setState(() {
       campo.altenarMarcacao();
-      if(_tabuleiro.resolvido) _venceu = true;
+      if (_tabuleiro.resolvido) _venceu = true;
     });
+  }
+
+  Tabuleiro _getTabuleiro(double largura, double altura) {
+    if (_tabuleiro == null) {
+      int qtdeColunas = 10;
+      double tamanhoCampo = largura / qtdeColunas;
+      int qtdeLinhas = (altura / tamanhoCampo).floor();
+
+      _tabuleiro = Tabuleiro(
+        linhas: qtdeLinhas,
+        colunas: qtdeColunas,
+        qtdeBombas: (qtdeLinhas * 0.85).floor(),
+      );
+    }
+
+    return _tabuleiro;
   }
 
   @override
@@ -58,10 +69,18 @@ class _CampoMinadoAppState extends State<CampoMinadoApp> {
           onReiniciar: _reiniciar,
         ),
         body: Container(
-          child: TabuleiroWidget(
-            tabuleiro: _tabuleiro,
-            onAbrir: _abrir,
-            onAlternarMarcacao: _alternarMarcacao,
+          color: Colors.grey,
+          child: LayoutBuilder(
+            builder: (ctx, constraints) {
+              return TabuleiroWidget(
+                tabuleiro: _getTabuleiro(
+                  constraints.maxWidth,
+                  constraints.maxHeight,
+                ),
+                onAbrir: _abrir,
+                onAlternarMarcacao: _alternarMarcacao,
+              );
+            },
           ),
         ),
       ),
