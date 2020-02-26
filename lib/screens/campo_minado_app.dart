@@ -63,6 +63,7 @@ class _CampoMinadoAppState extends State<CampoMinadoApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: "Campo Minado",
       home: Scaffold(
         appBar: ResultadoWidget(
           venceu: _venceu,
