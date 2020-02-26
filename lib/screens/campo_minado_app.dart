@@ -52,7 +52,7 @@ class _CampoMinadoAppState extends State<CampoMinadoApp> {
       _tabuleiro = Tabuleiro(
         linhas: qtdeLinhas,
         colunas: qtdeColunas,
-        qtdeBombas: (qtdeLinhas * 0.85).floor(),
+        qtdeBombas: (qtdeLinhas * qtdeColunas  * 0.13).floor(),
       );
     }
 
