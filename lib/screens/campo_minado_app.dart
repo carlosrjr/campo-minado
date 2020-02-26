@@ -4,7 +4,19 @@ import 'package:flutter/material.dart';
 import '../components/resultado_widget.dart';
 import '../models/campo.dart';
 
-class CampoMinadoApp extends StatelessWidget {
+class CampoMinadoApp extends StatefulWidget {
+  @override
+  _CampoMinadoAppState createState() => _CampoMinadoAppState();
+}
+
+class _CampoMinadoAppState extends State<CampoMinadoApp> {
+  bool _venceu;
+  Tabuleiro _tabuleiro = Tabuleiro(
+    linhas: 5,
+    colunas: 5,
+    qtdeBombas: 3,
+  );
+
   void _reiniciar() {
     print('reiniciar...');
   }
@@ -22,16 +34,12 @@ class CampoMinadoApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: ResultadoWidget(
-          venceu: false,
+          venceu: _venceu,
           onReiniciar: _reiniciar,
         ),
         body: Container(
           child: TabuleiroWidget(
-            tabuleiro: Tabuleiro(
-              linhas: 5,
-              colunas: 5,
-              qtdeBombas: 5,
-            ),
+            tabuleiro: _tabuleiro,
             onAbrir: _abrir,
             onAlternarMarcacao: _alternarMarcacao,
           ),
